@@ -10,7 +10,7 @@ npm i axios --save
 4.jsonP
 npm i jsonp --save
 5.为目录配置别名
-新建 package.config.js
+新建 vue.config.js
 6.重置css默认样式
 在main.js中引入
 //引入reset.css
@@ -23,4 +23,6 @@ npm i vant --save-dev
 import Vant from 'vant';
 import 'vant/lib/index.css';
 Vue.use(Vant);
+8.引入字体样式库
+import "./assets/taoke-icon-font/iconfont.css"
 ```
