@@ -17,6 +17,17 @@ export default {
     return {
       active: 0
     };
+  },
+  methods: {
+    // 13: 底部tab 图标
+    async tabIcon() {
+      const url =
+        "http://cmsjapi.ffquan.cn/api/category/product/model-detail-by-model-id-new?entityId=3&modelId=1&proModelId=1&source=3&version=v1&tuserId=1206917&isWechat=0";
+      let { data: res } = await this.$axios.get(url);
+      // console.log("大家都在领", res.data);
+      this.tabicon = res.data.config;
+      console.log("底部导航图标", this.tabicon);
+    }
   }
 };
 </script>

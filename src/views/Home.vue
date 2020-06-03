@@ -1,10 +1,15 @@
 <template>
-  <div class="container">首页</div>
+  <div class="container">
+    首页
+    <my-menu></my-menu>
+  </div>
 </template>
 
 <script>
 export default {
-  components: {}
+  components: {
+    MyMenu: () => import("components/home/menu")
+  }
 };
 </script>
 
