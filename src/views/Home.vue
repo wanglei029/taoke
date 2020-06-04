@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <!-- <my-header></my-header> -->
+    <my-header></my-header>
     <my-menu></my-menu>
   </div>
 </template>
