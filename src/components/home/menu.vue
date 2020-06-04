@@ -117,6 +117,7 @@ export default {
 .horizontal-container {
   position: fixed;
   top: 44px;
+  z-index: 100;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;

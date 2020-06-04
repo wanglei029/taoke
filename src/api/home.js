@@ -1,4 +1,5 @@
 import axios from "axios"
+import { commonParams } from './config'
 
 export function getMenu() {
     const url = "http://cmsjapi.ffquan.cn/api/category/get-category-list";
@@ -6,6 +7,41 @@ export function getMenu() {
         return Promise.resolve(res.data)
     })
 }
+export function getRecommend() {
+    const url = "http://cmsjapi.ffquan.cn/api/category/product/model-detail-by-model-id-new";
+    const data = Object.assign({}, commonParams, {
+        // entityId: 3,
+        modelId: -1,
+        proModelId: 1,
+        source: 3,
+        version: 'v1',
+        tuserId: 1,
+        isWechat: 0
+    })
+    return axios.get(url, {
+        params: data
+    }).then((res) => {
+        return Promise.resolve(res.data)
+    })
+}
+export function getActive() {
+    const url = "http://cmsjapi.ffquan.cn/api/category/product/model-detail-by-model-id-new";
+    const data = Object.assign({}, commonParams, {
+        // entityId: 3,
+        modelId: 18784,
+        proModelId: 19,
+        source: 3,
+        version: 'v1',
+        tuserId: 1,
+        isWechat: 0
+    })
+    return axios.get(url, {
+        params: data
+    }).then((res) => {
+        return Promise.resolve(res.data)
+    })
+}
+
 export function getDiscList() {
     const url = '/api/getDiscList'
 
