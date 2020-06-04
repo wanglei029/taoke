@@ -34,6 +34,13 @@ import "./assets/taoke-icon-font/iconfont.css"
 ### 开发首页中的menu 分支3-menu
 
 ``` 
+/*****
+    注意 当父容器设置 position: fixed; 的时候 横向滚动会失效
+    必须同时设置width:100%;box-sizing: border-box;
+    
+    子容器 .scroll-wrapper 要设置width:100%
+*******/ 
+
 menu的难点主要在于实现列表的横向滚动 采用better-scroll 来实现横向滚动
 遇到的问题：列表不滚动，有两个可能  
     1.需要滚动的scroll-content 宽度不够

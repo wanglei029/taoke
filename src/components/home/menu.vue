@@ -1,15 +1,28 @@
 <template>
   <div class="horizontal-container">
+    <div class="left">
+      <span>精选</span>
+    </div>
     <div class="scroll-wrapper" ref="scroll">
       <div class="scroll-content">
-        <div class="scroll-item" v-for="(item, index) in menuList" :key="index">{{item.name}}</div>
+        <router-link
+          tag="div"
+          to="/nine"
+          class="scroll-item"
+          v-for="(item, index) in menuList"
+          :key="index"
+        >{{item.name}}</router-link>
       </div>
+    </div>
+    <div class="right">
+      <span>消息</span>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
 import BScroll from "@better-scroll/core";
-
+import { getMenu } from "api/home";
+import { ERR_OK } from "api/config";
 export default {
   data() {
     return {
@@ -32,7 +45,7 @@ export default {
     }
   },
   created() {
-    this.getMenu();
+    this._getMenu();
   },
   mounted() {
     this.init();
@@ -66,16 +79,23 @@ export default {
     this.bs.destroy();
   },
   methods: {
-    // 超级分类
-    async getMenu() {
-      // 通过async和await简化promise操作
-      // {data：res}解构赋值
-      // let { data: res } = await this.$axios.get("getsupercategory");
-      const url = "http://cmsjapi.ffquan.cn/api/category/get-category-list";
-      let { data: res } = await this.$axios.get(url);
-      this.menuList = res.data;
-      console.log(this.menuList);
+    async _getMenu() {
+      let res = await getMenu();
+      if (res.code === ERR_OK) {
+        this.menuList = res.data;
+        console.log("async", res);
+      }
     },
+    // 超级分类
+    // async getMenu() {
+    //   // 通过async和await简化promise操作
+    //   // {data：res}解构赋值
+    //   // let { data: res } = await this.$axios.get("getsupercategory");
+    //   const url = "http://cmsjapi.ffquan.cn/api/category/get-category-list";
+    //   let { data: res } = await this.$axios.get(url);
+    //   this.menuList = res.data;
+    //   console.log(this.menuList);
+    // },
     init() {
       this.bs = new BScroll(this.$refs.scroll, {
         scrollX: true,
@@ -87,26 +107,46 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "@/assets/style/_varibles";
+/*****
+    注意 当父容器设置 position: fixed; 的时候 横向滚动会失效
+    必须同时设置width:100%;box-sizing: border-box;
+    
+    子容器 .scroll-wrapper 要设置width:100%
+*******/ 
 .horizontal-container {
+  position: fixed;
+  top: 44px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  background: $bgColor;
+  color: #fff;
+  white-space: nowrap;
+  padding: 0 8px;
+  box-sizing: border-box;
   .scroll-wrapper {
+    color: rgba(#fff, 0.65);
+    flex-shrink: 1;
     width: 100%;
-    height: 0.8rem;
-    white-space: nowrap;
+    height: 30px;
     overflow: hidden;
-    // color: #fff;
-    background: chartreuse;
+    margin: 0 8px;
 
     .scroll-content {
       display: inline-block;
     }
 
     .scroll-item {
-      height: 0.8rem;
-      line-height: 0.8rem;
+      height: 30px;
+      line-height: 30px;
       font-size: 14px;
       display: inline-block;
       text-align: center;
-      padding: 0 0.16rem;
+      padding: 0 8px;
     }
   }
 }

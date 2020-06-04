@@ -9,6 +9,8 @@ module.exports = {
                 'router': '@/router',
                 'views': '@/views',
                 'store': '@/store',
+                'api': '@/api',
+
             }
         }
     },

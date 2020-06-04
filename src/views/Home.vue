@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    首页
+    <!-- <my-header></my-header> -->
     <my-menu></my-menu>
   </div>
 </template>
@@ -8,6 +8,7 @@
 <script>
 export default {
   components: {
+    MyHeader: () => import("components/home/header"),
     MyMenu: () => import("components/home/menu")
   }
 };
