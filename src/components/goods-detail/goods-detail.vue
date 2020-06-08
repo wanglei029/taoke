@@ -13,11 +13,11 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-    computed: {
-        ...mapGetters([
-            'goods' //对应的是store/getters 中的goods
-        ])
-    },
+  computed: {
+    ...mapGetters([
+      "goods" //对应的是store/getters 中的goods
+    ])
+  },
   data() {
     return {
       id: {
@@ -27,7 +27,7 @@ export default {
     };
   },
   created() {
-    console.log('state中的goods',this.goods.dtitle);
+    console.log("state中的goods", this.goods.dtitle);
   },
   mounted() {
     console.log(this.id);

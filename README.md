@@ -172,7 +172,9 @@ data(){
 
 ``` 
 1.抽离了axios请求 axios请求封装到了api/home 中
+
 2.  
+
 export function getActive() {
     const url = "http://cmsjapi.ffquan.cn/api/category/product/model-detail-by-model-id-new";
     const data = Object.assign({}, commonParams, {
@@ -196,3 +198,86 @@ export function getActive() {
   这样只适用于少量的数据和不复杂的DOM
   若是数组中的前2条数据单独渲染成独特的DOM结构，后面几十条数据渲染的DOM结构相同，需要先加工数组数据，截取数组的一部分进行渲染
 ```
+
+### 使用vuex管理数据 (第一个实例 管理商品 goods)
+
+> 需求场景：首页有商品列表(recommendGoodsList.vue) 点击商品(@click="selectGoods(item)") 页面跳转到商品详情页面(goods-detail.vue) 
+
+商品详情页面: 需要商品的id title img 等一系列的信息 通过路由跳转传参不方便 采用vuex来管理goods实例
+1：首先在store文件夹下创建如下文件 actions.js getter.js index.js mutations.js mutation-types.js state.js
+  ``` 
+   a:  mutation-types.js 
+    /* 
+    * @Description: 存放 mutation 的一些常量
+    * @FilePath: \vue-music\src\store\mutation-type.js
+    */ 
+    export const SET_GOODS='SET_GOODS'
+
+    b：mutations.js
+
+        import * as types from './mutation-types'
+        const mutations={
+            [types.SET_GOODS](state,goods){
+                state.goods=goods
+            }
+        }
+        export default mutations
+
+    c：getter.js 
+
+        export const goods=state=>state.goods
+    
+    d：state.js
+
+        const state ={
+            goods:{}
+        }
+        export default state
+    
+    e：index.js
+        import Vue from 'vue'
+        import Vuex from 'vuex'
+        import * as actions from './actions'
+        import * as getters from './getters'
+        import state from './state'
+        import mutations from './mutations'
+        /* 通过mutation修改state的时候 createLogger 会在控制台打印log */
+        import createLogger from 'vuex/dist/logger'
+        Vue.use(Vuex)
+        const debug = process.env.NODE_ENV!=='production'
+        export default new Vuex.Store({
+        state,
+        mutations,
+        actions,
+        getters,
+        strict:debug,
+        plugins:debug?[createLogger()]:[]
+        })
+
+  ```
+2.商品列表中点击商品 提交mutation
+    ```
+    html：<div @click="selectGoods(item)" >
+    
+    js：
+    import { mapMutations } from "vuex";
+      methods: {
+        selectGoods(goods) {
+        this.$router.push({
+            /* 编程式导航 */
+            path: `/goodsdetail/${goods.id}`
+        });
+        this.setGoods(goods); //提交数据
+        }
+      }
+    ```
+3：商品详情页获取商品数据
+    ```
+    js:
+    import { mapGetters } from "vuex";
+        computed: {
+            ...mapGetters([
+            "goods" //对应的是store/getters 中的goods
+            ])
+        },
+    ```
