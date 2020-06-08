@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-06-02 17:38:20
+ * @LastEditTime: 2020-06-08 10:35:39
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \taoke\src\main.js
+ */ 
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -24,6 +32,11 @@ import "./assets/style/border.css"
 
 // 5.引入字体图标文件
 import "./assets/taoke-icon-font/iconfont.css"
+// 6.引入图片懒加载
+import VueLazyLoad from 'vue-lazyload'
+Vue.use(VueLazyLoad,{
+  loading:require('assets/rolling.gif')
+})
 
 Vue.config.productionTip = false
 new Vue({

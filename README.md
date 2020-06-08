@@ -167,3 +167,32 @@ data(){
 版权声明：本文为CSDN博主「Dark_programmer」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/Dark_programmer/java/article/details/106242354
 ```
+
+### 开发首页 active
+
+``` 
+1.抽离了axios请求 axios请求封装到了api/home 中
+2.  
+export function getActive() {
+    const url = "http://cmsjapi.ffquan.cn/api/category/product/model-detail-by-model-id-new";
+    const data = Object.assign({}, commonParams, {
+        // entityId: 3,
+        modelId: 18784,
+        proModelId: 19,
+        source: 3,
+        version: 'v1',
+        tuserId: 1,
+        isWechat: 0
+    })
+    return axios.get(url, {
+        params: data
+    }).then((res) => {
+        return Promise.resolve(res.data)
+    })
+}
+
+3.数据要渲染的DOM结构是不同的，因此不能使用v-for循环渲染数据
+  采用的是actives[0].address 这样的方式来加载数据
+  这样只适用于少量的数据和不复杂的DOM
+  若是数组中的前2条数据单独渲染成独特的DOM结构，后面几十条数据渲染的DOM结构相同，需要先加工数组数据，截取数组的一部分进行渲染
+```
